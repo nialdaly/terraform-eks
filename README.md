@@ -6,6 +6,7 @@ The following project will provision a VPC, security groups and an Amazon EKS cl
 * Terraform
 * wget
 * kubectl
+* helm
 
 ## Amazon EKS Cluster provisioning
 To provision an Amazon EKS cluster the following Terraform files are needed.
@@ -21,8 +22,8 @@ The Terraform workspace can be initialized by using the `terraform init` command
 The `terraform apply` command can be used to provision the resources and build the EKS cluster.
 
 ## kubectl Configuration
-The access credentials of yje EKS cluster can be retrieved and used to configure kubectl using the following command.
-``
+The access credentials of the EKS cluster can be retrieved and used to configure kubectl using the following command.
+`aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)`
 
 ## Deploying the Kubernetes Metrics Server & Dashboard
 The metrics server can be downloaded and unzipped 
@@ -43,7 +44,7 @@ A proxy server can be created using the following command.
 The proxy server allows you to navigate to the Kubernetes dashboard from the browser on your own machine. This proxy can be stopped by CTRL + C. Now the Kubernetes dashboard should be accessible via the following URL.
 `http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`
 
-### Authenticating the Kubernetes Dashboard
+## Authenticating the Kubernetes Dashboard
 To use the Kubernetes dashboard, you need to create a ClusterRoleBinding and provide an authorization token. This gives the cluster-admin permission to access the kubernetes-dashboard.
 
 Open another terminal window while the kubectl proxy process is open. The ClusterRoleBinding resource can be created using the following command.
@@ -55,3 +56,21 @@ The authorization token can be generated using the following command.
 `kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep service-controller-token | awk '{print $1}')`
 
 The generated token can then be copied and pasted in the Kubernetes dashboard authentiction screen and used to sign in.
+
+## Tiller (Helm Server) Setup
+The Helm ServiceAccount can be applied using the following command.
+`kubectl apply -f tiller-user.yaml`
+
+The Helm Jenkins stable repo can be downloaded using the following command.
+`helm repo add jenkins https://charts.jenkins.io`
+
+## Jenkins Installation using Helm
+Jenkins can be installed on the cluster using the following command.
+`helm install --name jenkins-cicd jenkins/jenkins -f jenkins-values.yaml`
+
+After Jenkins has been installed, we can access the load balancer address via the following command.
+
+```
+export SERVICE_IP=$(kubectl get svc --namespace default cicd-jenkins --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+echo http://$SERVICE_IP/login
+```

@@ -32,3 +32,4 @@ override.tf.json
 # Kubernetes metrics server artefacts
 metrics-server-0.3.6
 v0.3.6.tar.gz
+kubeconfig_demo-eks-cluster
