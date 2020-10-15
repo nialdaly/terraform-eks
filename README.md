@@ -3,7 +3,7 @@ The following project will demonstrate the process of provisioning a VPC, securi
 
 ## Prerequisites
 * AWS account
-* [Terraform])(https://learn.hashicorp.com/tutorials/terraform/install-cli)
+* [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 * [wget](https://stackoverflow.com/questions/33886917/how-to-install-wget-in-macos)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [helm](https://helm.sh/docs/intro/install/)
