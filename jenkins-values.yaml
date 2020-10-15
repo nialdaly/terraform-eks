@@ -14,7 +14,4 @@ agent:
   Enabled: false
 rbac:
   create: true
-serviceAccount:
-  create: false
-  name: "jenkins"
   
