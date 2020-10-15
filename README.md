@@ -3,10 +3,10 @@ The following project will provision a VPC, security groups and an Amazon EKS cl
 
 ## Prerequisites
 * AWS account
-* Terraform
-* wget
-* kubectl
-* helm
+* [Terraform])(https://learn.hashicorp.com/tutorials/terraform/install-cli)
+* [wget](https://stackoverflow.com/questions/33886917/how-to-install-wget-in-macos)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [helm](https://helm.sh/docs/intro/install/)
 
 ## Amazon EKS Cluster provisioning
 To provision an Amazon EKS cluster the following Terraform files are needed.
