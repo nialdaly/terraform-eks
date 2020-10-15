@@ -1,5 +1,5 @@
 # Terraform EKS
-The following project will provision a VPC, security groups and an Amazon EKS cluster using Terraform.
+The following project will demonstrate the process of provisioning a VPC, security groups and an Amazon EKS cluster using Terraform. Then Jenkins is installed on the cluster using Helm.
 
 ## Prerequisites
 * AWS account
@@ -23,7 +23,9 @@ The `terraform apply` command can be used to provision the resources and build t
 
 ## kubectl Configuration
 The access credentials of the EKS cluster can be retrieved and used to configure kubectl using the following command.
-`aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)`
+```
+aws eks --region $(terraform output region) update-kubeconfig --name $(terraform output cluster_name)
+```
 
 ## Deploying the Kubernetes Metrics Server & Dashboard
 The metrics server can be downloaded and unzipped 
@@ -32,7 +34,9 @@ wget -O v0.3.6.tar.gz https://codeload.github.com/kubernetes-sigs/metrics-server
 ```
 
 It can then be deployed to the cluster using the following command.
-`kubectl apply -f metrics-server-0.3.6/deploy/1.8+/`
+```
+kubectl apply -f metrics-server-0.3.6/deploy/1.8+/
+```
 
 The folliowing command be used to verify that the metrics server has been deployed.
 ```
@@ -40,7 +44,9 @@ kubectl get deployment metrics-server -n kube-system
 ```
 
 The Kubernetes Dashboard resources can be scheduled using the following command.
-`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml`
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+```
 
 A proxy server can be created using the following command.
 ```
