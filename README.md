@@ -39,10 +39,15 @@ The Kubernetes Dashboard resources can be scheduled using the following command.
 `kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml`
 
 A proxy server can be created using the following command.
-`kubectl proxy`
+```
+kubectl proxy
+```
 
 The proxy server allows you to navigate to the Kubernetes dashboard from the browser on your own machine. This proxy can be stopped by CTRL + C. Now the Kubernetes dashboard should be accessible via the following URL.
-`http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`
+
+```
+http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+```
 
 ## Authenticating the Kubernetes Dashboard
 To use the Kubernetes dashboard, you need to create a ClusterRoleBinding and provide an authorization token. This gives the cluster-admin permission to access the kubernetes-dashboard.
@@ -53,7 +58,9 @@ Open another terminal window while the kubectl proxy process is open. The Cluste
 
 The authorization token can be generated using the following command.
 
-`kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep service-controller-token | awk '{print $1}')`
+```
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep service-controller-token | awk '{print $1}')
+```
 
 The generated token can then be copied and pasted in the Kubernetes dashboard authentiction screen and used to sign in.
 
