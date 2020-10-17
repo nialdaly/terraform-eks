@@ -1,5 +1,5 @@
 # Terraform EKS
-The following project will demonstrate the process of provisioning a VPC, security groups and an Amazon EKS cluster using Terraform. Then Jenkins is installed on the cluster using Helm.
+The following project will demonstrate the process of provisioning a Virtual Private Cloud (VPC), security groups and an Amazon Elastic Kubernetes Service (EKS) cluster using Terraform. Once the EKS cluster has been successfully created, [kubectl](https://kubernetes.io/docs/reference/kubectl/kubectl/) and [Helm](https://helm.sh) will be used to install [Jenkins](https://www.jenkins.io).
 
 ## Prerequisites
 * AWS account
@@ -9,7 +9,7 @@ The following project will demonstrate the process of provisioning a VPC, securi
 * [helm](https://helm.sh/docs/intro/install/)
 
 ## Amazon EKS Cluster provisioning
-To provision an Amazon EKS cluster the following Terraform files are needed.
+To provision an EKS cluster the following Terraform files are needed.
 
 `vpc.tf` provisions a new VPC, subnets and availability zones using the AWS VPC Module.
 
@@ -102,7 +102,7 @@ Alongside the `jenkins-cicd` service the external ip address should be available
 printf $(kubectl get secret --namespace default jenkins-cicd -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 ```
 
-## Deleting the Jenkins Service
+## Resource Cleanup
 The Jenkins service can be deleted using the following commands.
 ```
 kubectl delete services jenkins-cicd
@@ -110,4 +110,7 @@ kubectl delete services jenkins-cicd-agent
 helm uninstall jenkins-cicd
 ```
 
-The EKS cluster and the associated resources can be deleted using the `terraform destroy` command.
+The EKS cluster and it's associated resources can be deleted using the `terraform destroy` command.
+
+## Additional Resources
+* [Provisioning an EKS Cluster using Terraform](https://learn.hashicorp.com/tutorials/terraform/eks)
